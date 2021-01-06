@@ -1,37 +1,66 @@
 package com.cao.config;
 
+
+import com.cao.filter.TokenFilter;
+import com.cao.model.LoginUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private TokenFilter tokenFilter;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/user/**").hasRole("user")
-                .antMatchers("/admin/**").hasRole("admin")
-                .antMatchers("/guest/**").hasRole("guest");
+                .antMatchers("/user/**").hasAnyRole("user", "admin")
+                .antMatchers("/admin/**").hasAnyRole("admin")
+                .antMatchers("/guest/**").hasAnyRole("guest", "user", "admin");
 
         http.formLogin().loginPage("/toLogin").usernameParameter("user").passwordParameter("pwd").loginProcessingUrl("/login");
         http.csrf().disable();
         http.logout().logoutSuccessUrl("/");
         http.rememberMe().rememberMeParameter("remember");
 
+//        http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
+//                .withUser("user").password(new BCryptPasswordEncoder().encode("123123")).roles("user")
+//                .and()
+//                .withUser("admin").password(new BCryptPasswordEncoder().encode("123123")).roles("admin")
+//                .and()
+//                .withUser("guest").password(new BCryptPasswordEncoder().encode("123123")).roles("guest");
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-                .withUser("testuser").password(new BCryptPasswordEncoder().encode("123123")).roles("user")
-                .and()
-                .withUser("root").password(new BCryptPasswordEncoder().encode("123123")).roles("admin")
-                .and()
-                .withUser("guest").password(new BCryptPasswordEncoder().encode("123123")).roles("guest");
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 }
