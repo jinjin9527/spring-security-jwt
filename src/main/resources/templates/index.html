@@ -89,6 +89,10 @@
             </div>
             <br>
             <div class="ui segment" style="text-align: center" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
+                <label for="token_view">トークン：</label>
+                <h6 id="token_view"></h6>
+            </div>
+            <div class="ui segment" style="text-align: center" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
                 <div class="ui raised segment">
                     <input type="button" style="btn" id="tokencheck_success" onclick="tokencheck(1)" value="tokencheck_success"/>
                 </div>
@@ -103,5 +107,8 @@
 
 
 </body>
+<script>
+    $("#token_view").text(localStorage.getItem("token"));
+</script>
 
 </html>

@@ -58,7 +58,7 @@ function tokencheck(param){
 
     var token = localStorage.getItem("token");
     if (param ==2) {
-        token = "";
+        token = token + "123";
     }
 	$.ajax({
 		type : 'post',
