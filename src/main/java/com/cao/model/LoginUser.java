@@ -1,34 +1,42 @@
 package com.cao.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
 import java.util.Collection;
-public class LoginUser implements UserDetails {
+
+public class LoginUser implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = -1379274258881257107L;
 
 	private String token;
 	private Long loginTime;
 	private Long expireTime;
-	private UserDetails user;
+	private String password;
+	private String username;
+	private Collection<GrantedAuthority> authorities;
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;
+	private boolean credentialsNonExpired;
+	private boolean enabled;
 
 	public LoginUser(UserDetails user, String token, Long loginTime, Long expireTime) {
-		this.user = user;
 		this.token = token;
 		this.loginTime = loginTime;
 		this.expireTime = expireTime;
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.authorities =  ((User) user).getAuthorities();
+		this.accountNonExpired = user.isAccountNonExpired();
+		this.accountNonLocked = user.isAccountNonLocked();
+		this.credentialsNonExpired = user.isCredentialsNonExpired();
+		this.enabled = user.isEnabled();
 	}
+
 	public LoginUser(){
-
-	}
-
-	public UserDetails getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public String getToken() {
@@ -38,7 +46,6 @@ public class LoginUser implements UserDetails {
 	public void setToken(String token) {
 		this.token = token;
 	}
-
 
 	public Long getLoginTime() {
 		return loginTime;
@@ -57,37 +64,38 @@ public class LoginUser implements UserDetails {
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.user.getAuthorities();
-	}
-
-	@Override
 	public String getPassword() {
-		return this.user.getPassword();
+		return this.password;
 	}
 
 	@Override
-	public String getUsername() {
-		return this.user.getUsername();
-	}
+	public String getUsername() {return this.username;}
 
+	@JsonIgnore
 	@Override
-	public boolean isAccountNonExpired() {
-		return this.user.isAccountNonExpired();
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authorities;
 	}
 
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {return this.accountNonExpired;}
+
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {
-		return this.user.isAccountNonLocked();
+		return accountNonLocked;
 	}
 
+	@JsonIgnore
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return this.user.isCredentialsNonExpired();
+		return credentialsNonExpired;
 	}
 
+	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
-		return this.user.isEnabled();
+		return enabled;
 	}
 }

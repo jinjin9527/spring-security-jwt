@@ -18,28 +18,28 @@ public class RouterController {
 
     @RequestMapping("/toLogin")
     public String toLogin() {
-        return "views/login";
+        return "login";
     }
 
     @RequestMapping("/user/{id}")
     public String user(@PathVariable("id") int id) {
 //        System.out.println(inMemoryUserDetailsManager.loadUserByUsername("user"));
         System.out.println(((LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getToken());
-        return "views/user/" + id;
+        return "user/" + id;
     }
 
     @RequestMapping("/admin/{id}")
     public String admin(@PathVariable("id") int id) {
 //        System.out.println(inMemoryUserDetailsManager.loadUserByUsername("admin"));
         System.out.println(((LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getToken());
-        return "views/admin/" + id;
+        return "admin/" + id;
     }
 
     @RequestMapping("/guest/{id}")
     public String guest(@PathVariable("id") int id) {
 //        System.out.println(inMemoryUserDetailsManager.loadUserByUsername("guest"));
         System.out.println(((LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getToken());
-        return "views/guest/" + id;
+        return "guest/" + id;
     }
 
 }

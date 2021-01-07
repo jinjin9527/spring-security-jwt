@@ -18,13 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Token过滤器
- * 
- * @author 小威老师 xiaoweijiagou@163.com
- *
- *         2017年10月14日
- */
 @Component
 public class TokenFilter extends OncePerRequestFilter {
 

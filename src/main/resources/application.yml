@@ -17,5 +17,5 @@ server:
 
 token:
   expire:
-    seconds: 7200
+    seconds: 60
   jwtSecret: (XIAO:)_$^11244^%$_(WEI:)_@@++--(LAO:)_++++_.sds_(SHI:)
