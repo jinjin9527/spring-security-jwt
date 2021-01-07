@@ -1,7 +1,7 @@
-package com.cao.service;
+package com.sylinx.service;
 
-import com.cao.model.LoginUser;
-import com.cao.model.Token;
+import com.sylinx.model.LoginUser;
+import com.sylinx.model.Token;
 
 public interface TokenService {
 

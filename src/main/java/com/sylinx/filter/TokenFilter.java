@@ -1,13 +1,12 @@
-package com.cao.filter;
+package com.sylinx.filter;
 
 
-import com.cao.model.LoginUser;
-import com.cao.service.TokenService;
+import com.sylinx.model.LoginUser;
+import com.sylinx.service.TokenService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

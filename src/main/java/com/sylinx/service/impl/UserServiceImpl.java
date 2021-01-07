@@ -1,8 +1,8 @@
-package com.cao.service.impl;
+package com.sylinx.service.impl;
 
 
-import com.cao.model.LoginUser;
-import com.cao.service.UserService;
+import com.sylinx.model.LoginUser;
+import com.sylinx.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service

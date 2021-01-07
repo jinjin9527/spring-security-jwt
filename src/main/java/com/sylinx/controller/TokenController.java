@@ -1,9 +1,9 @@
-package com.cao.controller;
+package com.sylinx.controller;
 
-import com.cao.filter.TokenFilter;
-import com.cao.model.LoginUser;
-import com.cao.model.ResponseInfo;
-import com.cao.service.TokenService;
+import com.sylinx.filter.TokenFilter;
+import com.sylinx.model.LoginUser;
+import com.sylinx.model.ResponseInfo;
+import com.sylinx.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;

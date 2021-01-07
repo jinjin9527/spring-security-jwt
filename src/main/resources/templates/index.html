@@ -5,103 +5,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>home</title>
-    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <link th:href="@{/css/semantic.min.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+    <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
+    <div class="ui container">
+        <div class="ui segment" id="index-header-nav" th:fragment="nav-menu">
+            <div class="ui secondary menu">
+                <a class="item" th:href="@{/index}">home</a>
 
-<div class="ui container">
-
-    <div class="ui segment" id="index-header-nav" th:fragment="nav-menu">
-        <div class="ui secondary menu">
-            <a class="item" th:href="@{/index}">home</a>
-
-            <div class="right menu">
-                <div sec:authorize="!isAuthenticated()">
-                    <a class="item" th:href="@{/toLogin}">
-                        <i class="address card icon"></i> login
-                    </a>
-                </div>
-                <div sec:authorize="isAuthenticated()">
-                    <a class="item">
-                        user：<span sec:authentication="name"> </span>
-                        role：<span sec:authentication="authorities"></span>
-                    </a>
-                </div>
-                <div sec:authorize="isAuthenticated()">
-                    <a class="item" onclick="logout()">
-                        <i class="sign-out icon"></i> logout
-                    </a>
+                <div class="right menu">
+                    <div sec:authorize="!isAuthenticated()">
+                        <a class="item" th:href="@{/toLogin}">
+                            <i class="address card icon"></i> login
+                        </a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="item">
+                            user：<span sec:authentication="name"> </span>
+                            role：<span sec:authentication="authorities"></span>
+                        </a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="item" onclick="logout()">
+                            <i class="sign-out icon"></i> logout
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="ui segment" style="text-align: center">
-        <h3>Spring Security</h3>
-    </div>
+        <div class="ui segment" style="text-align: center">
+            <h3>Spring Security</h3>
+        </div>
 
-    <div>
-        <br>
-        <div class="ui three column stackable grid">
-            <!--动态菜单的效果-->
-            <div class="column" sec:authorize="hasAnyRole('admin', 'user')">
+        <div>
+            <br>
+            <div class="ui three column stackable grid">
+                <div class="column" sec:authorize="hasAnyRole('admin', 'user')">
+                    <div class="ui raised segment">
+                        <div class="ui">
+                            <div class="content">
+                                <h5 class="content">user 1</h5>
+                                <hr>
+                                <div><a th:href="@{/user/1}"><i class="bullhorn icon"></i> user-1</a></div>
+                                <div><a th:href="@{/user/2}"><i class="bullhorn icon"></i> user-2</a></div>
+                                <div><a th:href="@{/user/3}"><i class="bullhorn icon"></i> user-3</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="ui raised segment" sec:authorize="hasAnyRole('admin')">
+                        <div class="ui">
+                            <div class="content">
+                                <h5 class="content">admin</h5>
+                                <hr>
+                                <div><a th:href="@{/admin/1}"><i class="bullhorn icon"></i> admin-1</a></div>
+                                <div><a th:href="@{/admin/2}"><i class="bullhorn icon"></i> admin-2</a></div>
+                                <div><a th:href="@{/admin/3}"><i class="bullhorn icon"></i> admin-3</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="ui raised segment" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
+                        <div class="ui">
+                            <div class="content">
+                                <h5 class="content">guest</h5>
+                                <hr>
+                                <div><a th:href="@{/guest/1}"><i class="bullhorn icon"></i> guest-1</a></div>
+                                <div><a th:href="@{/guest/2}"><i class="bullhorn icon"></i> guest-2</a></div>
+                                <div><a th:href="@{/guest/3}"><i class="bullhorn icon"></i> guest-3</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="ui segment" style="text-align: center" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
                 <div class="ui raised segment">
-                    <div class="ui">
-                        <div class="content">
-                            <h5 class="content">user 1</h5>
-                            <hr>
-                            <div><a th:href="@{/user/1}"><i class="bullhorn icon"></i> user-1</a></div>
-                            <div><a th:href="@{/user/2}"><i class="bullhorn icon"></i> user-2</a></div>
-                            <div><a th:href="@{/user/3}"><i class="bullhorn icon"></i> user-3</a></div>
-                        </div>
-                    </div>
+                    <input type="button" style="btn" id="tokencheck_success" onclick="tokencheck(1)" value="tokencheck_success"/>
                 </div>
-            </div>
-
-            <div class="column">
-                <div class="ui raised segment" sec:authorize="hasAnyRole('admin')">
-                    <div class="ui">
-                        <div class="content">
-                            <h5 class="content">admin</h5>
-                            <hr>
-                            <div><a th:href="@{/admin/1}"><i class="bullhorn icon"></i> admin-1</a></div>
-                            <div><a th:href="@{/admin/2}"><i class="bullhorn icon"></i> admin-2</a></div>
-                            <div><a th:href="@{/admin/3}"><i class="bullhorn icon"></i> admin-3</a></div>
-                        </div>
-                    </div>
+                <div class="ui raised segment">
+                    <input type="button" style="btn" id="tokencheck_failure" onclick="tokencheck(2)" value="tokencheck_failure"/>
                 </div>
+                <label for="tokencheck_result">トークンチェック結果：</label>
+                <div id="tokencheck_result"></div>
             </div>
-
-            <div class="column">
-                <div class="ui raised segment" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
-                    <div class="ui">
-                        <div class="content">
-                            <h5 class="content">guest</h5>
-                            <hr>
-                            <div><a th:href="@{/guest/1}"><i class="bullhorn icon"></i> guest-1</a></div>
-                            <div><a th:href="@{/guest/2}"><i class="bullhorn icon"></i> guest-2</a></div>
-                            <div><a th:href="@{/guest/3}"><i class="bullhorn icon"></i> guest-3</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="ui segment" style="text-align: center" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
-            <div class="ui raised segment">
-                <input type="button" id="tokencheck_success" onclick="tokencheck(1)" value="tokencheck_success"/>
-            </div>
-            <div class="ui raised segment">
-                <input type="button" id="tokencheck_failure" onclick="tokencheck(2)" value="tokencheck_failure"/>
-            </div>
-            <label for="tokencheck_result">トークンチェック結果：</label><div id="tokencheck_result"></div>
         </div>
     </div>
-</div>
 
-<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-<script th:src="@{/js/semantic.min.js}"></script>
-<script th:src="@{/js/main.js}"></script>
+
 </body>
+
 </html>

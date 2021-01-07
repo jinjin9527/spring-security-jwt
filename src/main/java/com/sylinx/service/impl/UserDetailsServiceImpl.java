@@ -1,7 +1,7 @@
-package com.cao.service.impl;
+package com.sylinx.service.impl;
 
-import com.cao.model.LoginUser;
-import com.cao.service.UserService;
+import com.sylinx.model.LoginUser;
+import com.sylinx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

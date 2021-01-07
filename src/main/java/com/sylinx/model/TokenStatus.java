@@ -1,4 +1,4 @@
-package com.cao.model;
+package com.sylinx.model;
 
 public enum TokenStatus {
     TokenExpired(1, "トークン期限切れ"),

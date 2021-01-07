@@ -1,14 +1,3 @@
-function logout(){
-	$.ajax({
-		type : 'get',
-		url : '/logout',
-		success : function(data) {
-			localStorage.removeItem("token");
-			location.href='/';
-		}
-	});
-}
-
 $.fn.serializeObject = function() {
     var o = {};
     var a = this.serializeArray();
@@ -82,4 +71,43 @@ function tokencheck(param){
 		    $("#tokencheck_result").text(data["code"] + " " + data["message"]);
 		}
 	});
+}
+
+function login(obj) {
+    $(obj).attr("disabled", true);
+
+    var username = $.trim($('#user').val());
+    var password = $.trim($('#pwd').val());
+    if (username == "" || password == "") {
+        $("#info").html('ユーザー名かパスワードを入力してください。');
+        $(obj).attr("disabled", false);
+    } else {
+        $.ajax({
+            type : 'post',
+            url : '/login',
+            data : $("#login-form").serialize(),
+            success : function(data) {
+                console.log(data);
+                localStorage.setItem("token", data.token);
+                location.href = '/index';
+            },
+            error : function(xhr, textStatus, errorThrown) {
+                var msg = xhr.responseText;
+                var response = JSON.parse(msg);
+                $("#info").html(response.message);
+                $(obj).attr("disabled", false);
+            }
+        });
+    }
+}
+
+function logout(){
+    $.ajax({
+        type : 'get',
+        url : '/logout',
+        success : function(data) {
+            localStorage.removeItem("token");
+            location.href='/';
+        }
+    });
 }

@@ -1,6 +1,6 @@
-package com.cao.service;
+package com.sylinx.service;
 
-import com.cao.model.LoginUser;
+import com.sylinx.model.LoginUser;
 
 public interface UserService {
 

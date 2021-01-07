@@ -1,12 +1,12 @@
-package com.cao.config;
+package com.sylinx.config;
 
-import com.cao.filter.TokenFilter;
-import com.cao.model.LoginUser;
-import com.cao.model.ResponseInfo;
-import com.cao.model.Token;
-import com.cao.service.TokenService;
+import com.sylinx.filter.TokenFilter;
+import com.sylinx.model.LoginUser;
+import com.sylinx.model.ResponseInfo;
+import com.sylinx.model.Token;
+import com.sylinx.service.TokenService;
 
-import com.cao.utils.ResponseUtil;
+import com.sylinx.utils.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

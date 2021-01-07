@@ -1,4 +1,4 @@
-package com.cao.model;
+package com.sylinx.model;
 
 import com.sun.xml.internal.bind.v2.model.core.ID;
 

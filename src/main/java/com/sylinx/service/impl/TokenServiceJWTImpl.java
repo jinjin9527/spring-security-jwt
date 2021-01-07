@@ -1,8 +1,8 @@
-package com.cao.service.impl;
+package com.sylinx.service.impl;
 
-import com.cao.model.LoginUser;
-import com.cao.model.Token;
-import com.cao.service.TokenService;
+import com.sylinx.model.LoginUser;
+import com.sylinx.model.Token;
+import com.sylinx.service.TokenService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
