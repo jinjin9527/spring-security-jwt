@@ -34,7 +34,7 @@ public class SecurityHandlerConfig {
 			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 					Authentication authentication) throws IOException, ServletException {
 				LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-				String tokenString = tokenService.createToken(loginUser.getUsername(), loginUser.getPassword());
+				String tokenString = tokenService.createToken(loginUser.getUsername());
 				System.out.println("createToken : " + tokenString);
 				ResponseUtil.responseJson(response, HttpStatus.OK.value(), tokenString);
 			}

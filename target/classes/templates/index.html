@@ -5,106 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>home</title>
-    <!--semantic-ui-->
-    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
-    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/bootstrap/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
+    <div id="indexContainer" class="card" sec:authorize="isAuthenticated()">
+        <div class="card-header">
+            <h1 class="header">Cashless Menu</h1>
+        </div>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <button type="button" class="btn btn-primary w-100" onclick="logout()" >Logout</button>
+            </div>
 
-<!--主容器-->
-<div class="ui container">
-
-    <div class="ui segment" id="index-header-nav" th:fragment="nav-menu">
-        <div class="ui secondary menu">
-            <a class="item" th:href="@{/index}">home</a>
-
-            <!--登录注销-->
-            <div class="right menu">
-                <!--如果没有登录-->
-                <div sec:authorize="!isAuthenticated()">
-                    <a class="item" th:href="@{/toLogin}">
-                        <i class="address card icon"></i> login
-                    </a>
+            <div class="input-group mb-3">
+                <div  class="input-group-prepend">
+                    <span class="input-group-text">トークン：</span>
                 </div>
-                <div sec:authorize="isAuthenticated()">
-                    <!--如果登录：用户名，注销-->
-                    <!--注销-->
-                    <a class="item">
-                        user：<span sec:authentication="name"> </span>
-                        role：<span sec:authentication="authorities"></span>
-                    </a>
-                </div>
-                <div sec:authorize="isAuthenticated()">
-                    <!--如果登录：用户名，注销-->
-                    <!--注销-->
-                    <a class="item" th:href="@{/logout}">
-                        <i class="sign-out icon"></i> logout
-                    </a>
-                </div>
-
-
+                <textarea style="height:100px;resize: none;"  class="form-control" disabled id="token_view"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <button type="button" class="btn btn-success w-100" onclick="checkToken(1)">TokenCheck_Success</button>
+            </div>
+            <div class="input-group mb-3">
+                <button type="button" class="btn btn-danger w-100" onclick="checkToken(2)">TokenCheck_Failure</button>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text w-100" id="tokencheck_result">トークンチェック結果：</label>
             </div>
         </div>
     </div>
-
-    <div class="ui segment" style="text-align: center">
-        <h3>Spring Security</h3>
-    </div>
-
-    <div>
-        <br>
-        <div class="ui three column stackable grid">
-            <!--动态菜单的效果-->
-            <div class="column" sec:authorize="hasAnyRole('admin', 'user')">
-                <div class="ui raised segment">
-                    <div class="ui">
-                        <div class="content">
-                            <h5 class="content">user 1</h5>
-                            <hr>
-                            <div><a th:href="@{/user/1}"><i class="bullhorn icon"></i> user-1</a></div>
-                            <div><a th:href="@{/user/2}"><i class="bullhorn icon"></i> user-2</a></div>
-                            <div><a th:href="@{/user/3}"><i class="bullhorn icon"></i> user-3</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column">
-                <div class="ui raised segment" sec:authorize="hasAnyRole('admin')">
-                    <div class="ui">
-                        <div class="content">
-                            <h5 class="content">admin</h5>
-                            <hr>
-                            <div><a th:href="@{/admin/1}"><i class="bullhorn icon"></i> admin-1</a></div>
-                            <div><a th:href="@{/admin/2}"><i class="bullhorn icon"></i> admin-2</a></div>
-                            <div><a th:href="@{/admin/3}"><i class="bullhorn icon"></i> admin-3</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column">
-                <div class="ui raised segment" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
-                    <div class="ui">
-                        <div class="content">
-                            <h5 class="content">guest</h5>
-                            <hr>
-                            <div><a th:href="@{/guest/1}"><i class="bullhorn icon"></i> guest-1</a></div>
-                            <div><a th:href="@{/guest/2}"><i class="bullhorn icon"></i> guest-2</a></div>
-                            <div><a th:href="@{/guest/3}"><i class="bullhorn icon"></i> guest-3</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-
-
-<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-<script th:src="@{/js/semantic.min.js}"></script>
-
 </body>
+<script>
+    $("#token_view").text(localStorage.getItem("token"));
+</script>
+
 </html>

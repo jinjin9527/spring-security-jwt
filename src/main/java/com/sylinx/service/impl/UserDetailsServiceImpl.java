@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private static final Map<String ,LoginUser> userMap = new HashMap<>();
 
 	@Autowired
-	private WebClient webClient = WebClient.builder().baseUrl("http://localhost:8082/").build();
+	private WebClient webClient;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;

@@ -14,7 +14,7 @@ public class MvcConfig implements WebMvcConfigurer {
     ServiceProperties properties;
 
     @Bean
-    public WebClient restapiWebClient() {
+    public WebClient webClient() {
         WebClient client = WebClient.builder().baseUrl(properties.getDns()).build();
         return client;
     }

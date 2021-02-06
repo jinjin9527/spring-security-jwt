@@ -38,11 +38,10 @@ public class TokenServiceImpl implements TokenService {
         return true;
     }
 
-    public String createToken(String username, String password){
+    public String createToken(String userName){
         String service = "/createToken";
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("username", username);
-        formData.add("password", password);
+        formData.add("userName", userName);
         String token = webClient.post().uri(service).contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .body(BodyInserters.fromFormData(formData)).retrieve().bodyToMono(String.class).block();
         System.out.println("createToken : " + token);
