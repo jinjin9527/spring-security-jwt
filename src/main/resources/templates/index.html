@@ -7,66 +7,38 @@
     <title>home</title>
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/bootstrap/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
     <script th:src="@{bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/main.js}"></script>
 </head>
 <body>
-<div class="container">
-    <div id="index-header-nav" th:fragment="nav-menu">
-        <div class="row">
-            <div class="col-7">
-                <a th:href="@{/index}"><i class="bi bi-house-door"></i>home</a>
+    <div id="indexContainer" class="card" sec:authorize="isAuthenticated()">
+        <div class="card-header">
+            <h1 class="header">Cashless Menu</h1>
+        </div>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <button type="button" class="btn btn-primary w-100" onclick="logout()" >Logout</button>
             </div>
 
-            <div class="col">
-                <div class="row row-cols-3">
-                    <div class="col-auto" sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/toLogin}"><i class="bi bi-box-arrow-in-right"></i>
-                            login
-                        </a>
-                    </div>
-                    <div class="col-9" sec:authorize="isAuthenticated()">
-                        user：<span sec:authentication="name"> </span>
-                        User role：<span sec:authentication="authorities"></span>
-                    </div>
-                    <div class="col-auto" sec:authorize="isAuthenticated()">
-                        <a th:href="@{/}" onclick="logout()"><i class="bi bi-box-arrow-right"></i><i class="bi bi-person-fill"></i>
-                            logout
-                        </a>
-                    </div>
+            <div class="input-group mb-3">
+                <div  class="input-group-prepend">
+                    <span class="input-group-text">トークン：</span>
                 </div>
+                <textarea style="height:100px;"  class="form-control" disabled id="token_view"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <button type="button" class="btn btn-success w-100" onclick="checkToken(1)">TokenCheck_Success</button>
+            </div>
+            <div class="input-group mb-3">
+                <button type="button" class="btn btn-danger w-100" onclick="checkToken(2)">TokenCheck_Failure</button>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text w-100" id="tokencheck_result">トークンチェック結果：</label>
             </div>
         </div>
     </div>
-
-    <div style="text-align: center">
-        <h3>Spring Security</h3>
-    </div>
-
-    <div class="container-fluid">
-        <br>
-        <br>
-        <div style="text-align: center" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
-            <label for="token_view">トークン：</label>
-            <h6 class="badge bg-info text-wrap" style="width: 66rem;" id="token_view"></h6>
-        </div>
-        <div class="row gx-5" style="text-align: center" sec:authorize="hasAnyRole('admin', 'user', 'guest')">
-            <div class="col-auto mx-auto">
-                <input type="button" class="btn btn-outline-primary" id="tokencheck_success" onclick="checkToken(1)"
-                       value="tokencheck_success"/>
-            </div>
-            <div class="col-auto mx-auto">
-                <input type="button" class="btn btn-outline-primary" id="tokencheck_failure" onclick="checkToken(2)"
-                       value="tokencheck_failure"/>
-            </div>
-            <label for="tokencheck_result">トークンチェック結果：</label>
-            <div id="tokencheck_result"></div>
-        </div>
-    </div>
-</div>
-
-
 </body>
 <script>
     $("#token_view").text(localStorage.getItem("token"));

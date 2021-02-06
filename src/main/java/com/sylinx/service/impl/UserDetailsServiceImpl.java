@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		LoginUser loginUser = null;
+		LoginUser loginUser = new LoginUser();
 		String service = "/getUser";
 		MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
 		formData.add("userName", username);

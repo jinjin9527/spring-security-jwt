@@ -68,19 +68,19 @@ function checkToken(param){
         },
 		success : function(data) {
 		    console.log(data);
-		    $("#tokencheck_result").text(data["code"] + " " + data["message"]);
+		    $("#tokencheck_result").text("トークンチェック結果：" + data["code"] + " " + data["message"]);
 		}
 	});
 }
 
 function login(obj) {
     $(obj).attr("disabled", true);
-
     var username = $.trim($('#user').val());
     var password = $.trim($('#pwd').val());
+    $("#info").addClass("d-none");
     if (username == "" || password == "") {
-        $("#info").html('ユーザー名かパスワードを入力してください。');
         $(obj).attr("disabled", false);
+        return;
     } else {
         var token = localStorage.getItem("token");
         $.ajax({
@@ -98,6 +98,7 @@ function login(obj) {
             error : function(xhr, textStatus, errorThrown) {
                 var msg = xhr.responseText;
                 var response = JSON.parse(msg);
+                $("#info").removeClass("d-none");
                 $("#info").html(response.code + " : " + response.message);
                 $(obj).attr("disabled", false);
             }

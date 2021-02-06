@@ -3,52 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>login</title>
+    <title>CashlessLogin</title>
 
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/bootstrap/font/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
     <script th:src="@{bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/main.js}"></script>
 </head>
 
 <body>
-<div>
-    <div>
-        <div style="text-align: center">
-            <h1 class="header">login</h1>
+    <div id="loginContainer" class="card">
+        <div class="card-header">
+            <h1 class="header">Cashless Login</h1>
         </div>
-        <div>
-            <div>
-                <div>
-                    <div>
-
-                        <form id="login-form" method="post" onsubmit="return false;">
-                            <div>
-                                <label>Username</label>
-                                <div>
-                                    <i class="bi bi-person-fill"></i>
-                                    <input id="user" type="text" placeholder="Username" name="user">
-                                </div>
-                            </div>
-                            <div>
-                                <label>Password</label>
-                                <div>
-                                    <i class="bi bi-bag-fill"></i>
-                                    <input id="pwd" type="password" name="pwd">
-                                </div>
-                            </div>
-                            <input type="submit" onclick="login(this)"/>
-                        </form>
-                        <div id="info"></div>
-                    </div>
+        <div class="card-body">
+            <form id="login-form" method="post" onsubmit="return false;">
+                <div class="mb-3">
+                    <label for="user" class="form-label">Username</label>
+                    <input type="text" class="form-control is-valid" id="user" name="user" required>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="pwd" class="form-label">Password</label>
+                    <input type="password" class="form-control is-valid" id="pwd" name="pwd" required>
+                </div>
+                <div class="mb-3 alert alert-danger d-none" id="info">
+                </div>
+
+                <button type="submit" onclick="login(this)" class="btn btn-primary">Submit</button>
+            </form>
+
         </div>
         <div style="text-align: center">
-            <h3>Spring Security</h3>
+            <h3></h3>
         </div>
     </div>
-</div>
 </body>
 </html>
+
+
+
+
+
+<!--                        <form id="login-form" method="post" onsubmit="return false;">-->
+<!--                            <div>-->
+<!--                                <label>Username</label>-->
+<!--                                <div>-->
+<!--                                    <i class="bi bi-person-fill"></i>-->
+<!--                                    <input id="user" type="text" placeholder="Username" name="user">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div>-->
+<!--                                <label>Password</label>-->
+<!--                                <div>-->
+<!--                                    <i class="bi bi-bag-fill"></i>-->
+<!--                                    <input id="pwd" type="password" name="pwd">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <input type="submit" onclick="login(this)"/>-->
+<!--                        </form>-->

@@ -8,3 +8,19 @@ body{
 #blog-lable>a{
     margin: 1px;
 }
+
+#loginContainer{
+    position:absolute;
+    top:20%;
+    left:40%;
+    width:400px;
+    margin:0 auto;
+}
+
+#indexContainer{
+    position:absolute;
+    top:20%;
+    left:25%;
+    width:700px;
+    margin:0 auto;
+}
