@@ -54,7 +54,7 @@ $.ajaxSetup({
 	}
 });
 
-function tokencheck(param){
+function checkToken(param){
 
     var token = localStorage.getItem("token");
     if (param ==2) {
@@ -62,7 +62,7 @@ function tokencheck(param){
     }
 	$.ajax({
 		type : 'post',
-		url : '/tokencheck',
+		url : '/checkToken',
         headers : {
             "token" : token
         },
@@ -82,19 +82,23 @@ function login(obj) {
         $("#info").html('ユーザー名かパスワードを入力してください。');
         $(obj).attr("disabled", false);
     } else {
+        var token = localStorage.getItem("token");
         $.ajax({
             type : 'post',
             url : '/login',
             data : $("#login-form").serialize(),
+            headers : {
+                "token" : token
+            },
             success : function(data) {
                 console.log(data);
-                localStorage.setItem("token", data.token);
-                location.href = '/index';
+                localStorage.setItem("token", data);
+                location.href = '/index?token='+localStorage.getItem("token");
             },
             error : function(xhr, textStatus, errorThrown) {
                 var msg = xhr.responseText;
                 var response = JSON.parse(msg);
-                $("#info").html(response.message);
+                $("#info").html(response.code + " : " + response.message);
                 $(obj).attr("disabled", false);
             }
         });
@@ -102,8 +106,13 @@ function login(obj) {
 }
 
 function logout(){
+
+    var token = localStorage.getItem("token");
     $.ajax({
-        type : 'get',
+        type : 'post',
+        headers : {
+            "token" : token
+        },
         url : '/logout',
         success : function(data) {
             localStorage.removeItem("token");

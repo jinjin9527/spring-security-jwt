@@ -19,3 +19,6 @@ token:
   expire:
     seconds: 15
   jwtSecret: (SYLINX:)_$^11244^%$_(ZJ:)_@@++--(SPRING:)_++++_.sds_(SECURITY:)
+
+service:
+  dns: http://localhost:8082/

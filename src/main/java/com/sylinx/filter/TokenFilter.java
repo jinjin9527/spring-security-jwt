@@ -1,13 +1,7 @@
 package com.sylinx.filter;
 
-
-import com.sylinx.model.LoginUser;
-import com.sylinx.service.TokenService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -22,39 +16,10 @@ public class TokenFilter extends OncePerRequestFilter {
 
 	public static final String TOKEN_KEY = "token";
 
-	@Autowired
-	private TokenService tokenService;
-
-	@Autowired
-	private UserDetailsService userDetailsService;
-	private static final Long MINUTES_10 = 10 * 60 * 1000L;
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		String token = getToken(request);
-		if (StringUtils.isNotBlank(token)) {
-			LoginUser loginUser = tokenService.getLoginUser(token);
-			if (loginUser != null) {
-				loginUser = checkLoginTime(loginUser);
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser,
-						null, loginUser.getAuthorities());
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-			}
-		}
 		filterChain.doFilter(request, response);
-	}
-
-	private LoginUser checkLoginTime(LoginUser loginUser) {
-		long expireTime = loginUser.getExpireTime();
-		long currentTime = System.currentTimeMillis();
-		if (expireTime - currentTime <= MINUTES_10) {
-			String token = loginUser.getToken();
-			loginUser = (LoginUser) userDetailsService.loadUserByUsername(loginUser.getUsername());
-			loginUser.setToken(token);
-			tokenService.refresh(loginUser);
-		}
-		return loginUser;
 	}
 
 	public static String getToken(HttpServletRequest request) {
